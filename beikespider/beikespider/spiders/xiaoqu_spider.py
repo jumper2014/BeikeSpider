@@ -5,11 +5,14 @@
 
 from scrapy.spiders import Spider
 from bs4 import BeautifulSoup
+from beikespider.libs.page import *
 
 
 class BlogSpider(Spider):
     name = 'xiaoqu'
-    start_urls = ['https://sh.ke.com/xiaoqu/']
+    allowed_domains = 'ke.com'
+    page_count = get_page_count('https://sh.ke.com/xiaoqu/')
+    start_urls = ['https://sh.ke.com/xiaoqu/pg{0}'.format(i) for i in range(1, page_count+1)]
 
     def parse(self, response):
         html = response.body
