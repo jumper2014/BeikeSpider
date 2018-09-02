@@ -17,9 +17,9 @@ class BlogSpider(Spider):
     start_urls = ['https://sh.ke.com/xiaoqu/pg{0}'.format(i) for i in range(1, page_count+1)]
 
     def closed(self, reason):
-        print("-"*10)
+        print("-" * 50)
         print("total time cost:{0} seconds".format(time.time() - self.start))
-        print("-" * 10)
+        print("-" * 50)
 
     def parse(self, response):
         item = BeikespiderItem()
