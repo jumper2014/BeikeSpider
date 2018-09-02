@@ -2,6 +2,13 @@
 - 贝壳网房价爬虫
 - 基于scrapy爬虫框架
 
+# 运行
+- cd BeikeSpider/beikespider
+- scrapy crawl xiaoqu
+
+# 性能
+- 小区：24秒抓取3000条小区数据，平均每秒125条
+
 # 依赖
 - Python 3.6
 - scrapy
