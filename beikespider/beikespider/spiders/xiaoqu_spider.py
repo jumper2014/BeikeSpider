@@ -2,7 +2,7 @@
 # coding=utf-8
 # author: zengyuetian
 
-
+import time
 from scrapy.spiders import Spider
 from bs4 import BeautifulSoup
 from beikespider.libs.page import *
@@ -12,8 +12,14 @@ from beikespider.items import BeikespiderItem
 class BlogSpider(Spider):
     name = 'xiaoqu'
     allowed_domains = 'ke.com'
+    start = time.time()
     page_count = get_page_count('https://sh.ke.com/xiaoqu/')
     start_urls = ['https://sh.ke.com/xiaoqu/pg{0}'.format(i) for i in range(1, page_count+1)]
+
+    def closed(self, reason):
+        print("-"*10)
+        print("total time cost:{0} seconds".format(time.time() - self.start))
+        print("-" * 10)
 
     def parse(self, response):
         item = BeikespiderItem()
