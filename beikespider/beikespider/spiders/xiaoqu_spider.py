@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 from beikespider.libs.page import *
 from beikespider.items import BeikespiderItem
 from beikespider.libs.city import *
+from beikespider.libs.district import *
+from beikespider.libs.area import *
 
 
 class XiaoQuSpider(Spider):
@@ -18,11 +20,23 @@ class XiaoQuSpider(Spider):
     city = input(prompt)
     print('[{0}]'.format(city))
     print('OK, start to crawl ' + get_chinese_city(city))
-    page_count = get_page_count('https://{0}.ke.com/xiaoqu/'.format(city))
-    print('total page: {0}'.format(page_count))
+
+    areas =[]
+    districts = get_districts(city)
+    for district in districts:
+        areas.extend(get_areas(city, district))
+
+    print("-------------")
+    print("Area is: ")
+    print(areas)
+    print("-------------")
     start_urls = []
-    for i in range(1, page_count+1):
-        start_urls.append('https://{0}.ke.com/xiaoqu/pg{1}'.format(city, i))
+    for area in areas:
+        page_count = get_page_count('https://{0}.ke.com/xiaoqu/{1}'.format(city, area))
+        print('total page: {0} for {1}:{2}'.format(page_count, city, area))
+        for i in range(1, page_count + 1):
+            start_urls.append('https://{0}.ke.com/xiaoqu/{1}/pg{2}'.format(city, area, i))
+    print(start_urls)
 
     def __init__(self):
         pass

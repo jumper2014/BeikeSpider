@@ -19,10 +19,10 @@ def get_page_count(url):
         total_page = int(matches.group(1))
     except Exception as e:
         print("\tWarning: only find one page for {0}".format(url))
-        print("\t" + e.message)
+        # print("\t" + e.message)
         total_page = 1
 
-    # return 2  # for debug
+    # return 1  # for debug
     return total_page
 
 
