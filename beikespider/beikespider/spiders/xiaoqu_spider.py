@@ -7,14 +7,25 @@ from scrapy.spiders import Spider
 from bs4 import BeautifulSoup
 from beikespider.libs.page import *
 from beikespider.items import BeikespiderItem
+from beikespider.libs.city import *
 
 
-class BlogSpider(Spider):
+class XiaoQuSpider(Spider):
     name = 'xiaoqu'
     allowed_domains = 'ke.com'
     start = time.time()
-    page_count = get_page_count('https://sh.ke.com/xiaoqu/')
-    start_urls = ['https://sh.ke.com/xiaoqu/pg{0}'.format(i) for i in range(1, page_count+1)]
+    prompt = create_prompt_text()
+    city = input(prompt)
+    print('[{0}]'.format(city))
+    print('OK, start to crawl ' + get_chinese_city(city))
+    page_count = get_page_count('https://{0}.ke.com/xiaoqu/'.format(city))
+    print('total page: {0}'.format(page_count))
+    start_urls = []
+    for i in range(1, page_count+1):
+        start_urls.append('https://{0}.ke.com/xiaoqu/pg{1}'.format(city, i))
+
+    def __init__(self):
+        pass
 
     def closed(self, reason):
         print("-" * 50)
