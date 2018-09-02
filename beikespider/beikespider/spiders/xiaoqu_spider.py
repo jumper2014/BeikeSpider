@@ -6,6 +6,7 @@
 from scrapy.spiders import Spider
 from bs4 import BeautifulSoup
 from beikespider.libs.page import *
+from beikespider.items import BeikespiderItem
 
 
 class BlogSpider(Spider):
@@ -15,6 +16,7 @@ class BlogSpider(Spider):
     start_urls = ['https://sh.ke.com/xiaoqu/pg{0}'.format(i) for i in range(1, page_count+1)]
 
     def parse(self, response):
+        item = BeikespiderItem()
         html = response.body
         soup = BeautifulSoup(html, "lxml")
 
@@ -33,3 +35,9 @@ class BlogSpider(Spider):
             # 继续清理数据
 
             print("{0} {1} {2}".format(name, price, on_sale))
+            item['name'] = name
+            item['price'] = price
+            item['on_sale'] = on_sale
+            yield item
+
+

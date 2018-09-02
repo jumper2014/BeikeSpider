@@ -22,7 +22,9 @@ def get_page_count(url):
         print("\t" + e.message)
         total_page = 1
 
+    # return 2  # for debug
     return total_page
+
 
 if __name__ == '__main__':
     print(get_page_count("https://sh.ke.com/xiaoqu/"))
