@@ -5,45 +5,17 @@
 import time
 from scrapy.spiders import Spider
 from bs4 import BeautifulSoup
-from beikespider.libs.page import *
 from beikespider.items import BeikespiderItem
-from beikespider.libs.city import *
-from beikespider.libs.district import *
-from beikespider.libs.area import *
+from beikespider.libs.url import *
 
 
 class XiaoQuSpider(Spider):
     name = 'xiaoqu'
     allowed_domains = 'ke.com'
     start = time.time()
-    prompt = create_prompt_text()
-    city = input(prompt)
-    print('[{0}]'.format(city))
-    chinese_city = get_chinese_city(city)
-    if chinese_city is None:
-        print("No such city, please try again.")
-    else:
-        print('OK, start to crawl ' + chinese_city)
-
-    areas =[]
-    districts = get_districts(city)
-    for district in districts:
-        areas.extend(get_areas(city, district))
-
-    print("-------------")
-    print("Area is: ")
-    print(areas)
-    print("-------------")
-    start_urls = []
-    for area in areas:
-        page_count = get_page_count('https://{0}.ke.com/xiaoqu/{1}'.format(city, area))
-        print('total page: {0} for {1}:{2}'.format(page_count, city, area))
-        for i in range(1, page_count + 1):
-            start_urls.append('https://{0}.ke.com/xiaoqu/{1}/pg{2}'.format(city, area, i))
-    print(start_urls)
-
-    def __init__(self):
-        pass
+    url = XiaoQuURL()
+    start_urls = url.start_urls
+    city = url.city
 
     def closed(self, reason):
         print("-" * 50)
