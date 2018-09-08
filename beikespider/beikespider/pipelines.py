@@ -8,6 +8,9 @@
 import codecs
 import json
 from beikespider.libs.const import *
+from beikespider.spiders.xiaoqu_spider import XiaoQuSpider
+from beikespider.libs.path import *
+from beikespider.libs.date import *
 
 
 class BeikespiderPipeline(object):
@@ -23,7 +26,8 @@ class CsvWithEncodingPipeline(object):
     """
 
     def __init__(self):
-        self.file = codecs.open(XIAOQU_CSV, 'w', encoding='utf-8')  # 保存为json文件
+        create_date_path("bk", XiaoQuSpider.city, get_date_string())
+        self.file = codecs.open("data/bk/"+XiaoQuSpider.city+"/"+get_date_string()+"/"+XIAOQU_CSV, 'w', encoding='utf-8')  # 保存为json文件
 
     def process_item(self, item, spider):
         # line = json.dumps(dict(item), ensure_ascii=False) + "\n"  # 转为json的

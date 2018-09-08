@@ -19,7 +19,11 @@ class XiaoQuSpider(Spider):
     prompt = create_prompt_text()
     city = input(prompt)
     print('[{0}]'.format(city))
-    print('OK, start to crawl ' + get_chinese_city(city))
+    chinese_city = get_chinese_city(city)
+    if chinese_city is None:
+        print("No such city, please try again.")
+    else:
+        print('OK, start to crawl ' + chinese_city)
 
     areas =[]
     districts = get_districts(city)
