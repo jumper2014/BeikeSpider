@@ -5,9 +5,11 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+from queue import Queue
 
+page_q = Queue()
 
-def get_page_count(url):
+def get_page_count(url, area):
     response = requests.get(url)
     html = response.content
     soup = BeautifulSoup(html, "lxml")
@@ -23,6 +25,7 @@ def get_page_count(url):
         total_page = 1
 
     # return 1  # for debug
+    page_q.put((area, total_page))
     return total_page
 
 

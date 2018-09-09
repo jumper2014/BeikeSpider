@@ -5,7 +5,9 @@
 
 from beikespider.libs.district import *
 from beikespider.libs.request_headers import *
+from queue import Queue
 
+q = Queue()
 
 def get_district_url(city, district):
     """
@@ -46,11 +48,24 @@ def get_areas(city, district):
                 chinese_area_dict[area] = chinese_area
                 print(chinese_area)
                 areas.append(area)
+        q.put(areas)
         return areas
     except Exception as e:
         print(e)
 
 
 if __name__ == "__main__":
-    print(get_areas("sh", "huangpu"))
+    import threading
+    threads = list()
+    for dis in ["huangpu", "xuhui"]:
+        t = threading.Thread(target=get_areas, args=('sh', dis,))
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+    while not q.empty():
+        next_item = q.get()
+        print(next_item)
+
+    # print(get_areas("sh", "huangpu"))
 
