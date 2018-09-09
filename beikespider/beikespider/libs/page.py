@@ -7,7 +7,9 @@ import re
 from bs4 import BeautifulSoup
 from queue import Queue
 
+# 多线程安全的queue，用于存储page数
 page_q = Queue()
+
 
 def get_page_count(url, area):
     response = requests.get(url)

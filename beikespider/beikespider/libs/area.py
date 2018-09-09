@@ -7,7 +7,9 @@ from beikespider.libs.district import *
 from beikespider.libs.request_headers import *
 from queue import Queue
 
+# 多线程安全的queue，用于存储版块信息
 q = Queue()
+
 
 def get_district_url(city, district):
     """
@@ -56,6 +58,7 @@ def get_areas(city, district):
 
 if __name__ == "__main__":
     import threading
+
     threads = list()
     for dis in ["huangpu", "xuhui"]:
         t = threading.Thread(target=get_areas, args=('sh', dis,))
@@ -68,4 +71,3 @@ if __name__ == "__main__":
         print(next_item)
 
     # print(get_areas("sh", "huangpu"))
-

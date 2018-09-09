@@ -18,11 +18,21 @@ class XiaoQuSpider(Spider):
     city = url.city
 
     def closed(self, reason):
+        """
+        结束的时候计时
+        :param reason:
+        :return:
+        """
         print("-" * 50)
         print("total time cost:{0} seconds".format(time.time() - self.start))
         print("-" * 50)
 
     def parse(self, response):
+        """
+        针对每一个URL进行处理
+        :param response:
+        :return:
+        """
         item = BeikespiderItem()
         html = response.body
         soup = BeautifulSoup(html, "lxml")

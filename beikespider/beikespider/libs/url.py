@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding=utf-8
 # author: zengyuetian
+# 解析各城市的小区版块URL-多线程提速
 
 from beikespider.libs.city import *
 from beikespider.libs.district import *
 from beikespider.libs.area import *
 from beikespider.libs.page import *
 import threading
-
 
 
 class XiaoQuURL(object):
@@ -48,7 +48,8 @@ class XiaoQuURL(object):
         self.start_urls = []
         threads = list()
         for area in areas:
-            t = threading.Thread(target=get_page_count, args=('https://{0}.ke.com/xiaoqu/{1}'.format(city, area),area, ))
+            t = threading.Thread(target=get_page_count,
+                                 args=('https://{0}.ke.com/xiaoqu/{1}'.format(city, area), area,))
             threads.append(t)
             t.start()
         for t in threads:
@@ -64,6 +65,7 @@ class XiaoQuURL(object):
             # for i in range(1, page_count + 1):
             #     self.start_urls.append('https://{0}.ke.com/xiaoqu/{1}/pg{2}'.format(city, area, i))
         print(self.start_urls)
+
 
 if __name__ == '__main__':
     pass
