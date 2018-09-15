@@ -10,9 +10,9 @@ from beikespider.libs.page import *
 import threading
 
 
-class XiaoQuURL(object):
+class URL(object):
 
-    def __init__(self):
+    def __init__(self, house_type):
         prompt = create_prompt_text()
         city = input(prompt)
         self.city = city
@@ -49,7 +49,7 @@ class XiaoQuURL(object):
         threads = list()
         for area in areas:
             t = threading.Thread(target=get_page_count,
-                                 args=('https://{0}.ke.com/xiaoqu/{1}'.format(city, area), area,))
+                                 args=('https://{0}.ke.com/{1}/{2}'.format(city, house_type, area), area,))
             threads.append(t)
             t.start()
         for t in threads:
@@ -59,12 +59,14 @@ class XiaoQuURL(object):
             (area, page_count) = next_item
             print("area, page: {0} {1}".format(area, page_count))
             for i in range(1, page_count + 1):
-                self.start_urls.append('https://{0}.ke.com/xiaoqu/{1}/pg{2}'.format(city, area, i))
+                self.start_urls.append('https://{0}.ke.com/{1}/{2}/pg{3}'.format(city, house_type, area, i))
             # page_count = get_page_count('https://{0}.ke.com/xiaoqu/{1}'.format(city, area))
             # print('total page: {0} for {1}:{2}'.format(page_count, city, area))
             # for i in range(1, page_count + 1):
             #     self.start_urls.append('https://{0}.ke.com/xiaoqu/{1}/pg{2}'.format(city, area, i))
         print(self.start_urls)
+
+
 
 
 if __name__ == '__main__':

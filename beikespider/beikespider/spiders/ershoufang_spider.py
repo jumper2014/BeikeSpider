@@ -9,19 +9,19 @@ from beikespider.items import BeikespiderItem
 from beikespider.libs.url import *
 
 
-class XiaoQuSpider(Spider):
-    name = 'xiaoqu'
+class ErShouFangSpider(Spider):
+    name = 'ershoufang'
     allowed_domains = 'ke.com'
     start = time.time()
-    start_urls =[]
+    start_urls = []
     city = None
 
     def __init__(self):
         # 只有第一次进来才初始化url列表
-        if len(XiaoQuSpider.start_urls) == 0:
-            url = URL(XiaoQuSpider.name)
-            XiaoQuSpider.start_urls = url.start_urls
-            XiaoQuSpider.city = url.city
+        if len(ErShouFangSpider.start_urls) == 0:
+            url = URL(ErShouFangSpider.name)
+            ErShouFangSpider.start_urls = url.start_urls
+            ErShouFangSpider.city = url.city
 
     def closed(self, reason):
         """
