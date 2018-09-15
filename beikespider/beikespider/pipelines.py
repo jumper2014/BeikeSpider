@@ -8,7 +8,8 @@
 import codecs
 import json
 from beikespider.libs.const import *
-from beikespider.spiders.xiaoqu_spider import XiaoQuSpider
+from beikespider.spiders.xiaoqu_spider import *
+from beikespider.spiders.ershoufang_spider import *
 from beikespider.libs.path import *
 from beikespider.libs.date import *
 
@@ -26,14 +27,28 @@ class CsvWithEncodingPipeline(object):
     """
 
     def __init__(self):
-        create_date_path("bk", XiaoQuSpider.city, get_date_string())
-        self.file = codecs.open("data/bk/"+XiaoQuSpider.city+"/"+get_date_string()+"/"+XIAOQU_CSV, 'w', encoding='utf-8')  # 保存为json文件
+        self.init = False
+
 
     def process_item(self, item, spider):
+        if isinstance(spider, XiaoQuSpider):
+            file_name = "xiaoqu.csv"
+        elif isinstance(spider, ErShouFangSpider):
+            file_name = "ershoufang.csv"
+
+        if not self.init:
+            create_date_path("bk", spider.city, get_date_string())
+            self.file = codecs.open("data/bk/" + spider.city + "/" + get_date_string() + "/" + file_name, 'w',
+                                    encoding='utf-8')  # 保存为json文件
+            self.init = True
+
         # line = json.dumps(dict(item), ensure_ascii=False) + "\n"  # 转为json的
         print(item)
         # item = dict(item)
-        line = item['name'] + ',' + item['price'] + ',' + item['on_sale'] + '\n'
+        if isinstance(spider, XiaoQuSpider):
+            line = item['name'] + ',' + item['price'] + ',' + item['on_sale'] + '\n'
+        elif isinstance(spider, ErShouFangSpider):
+            line = item['name'] + ',' + item['price']+ '\n'
         self.file.write(line)  # 写入文件中
         return item
 

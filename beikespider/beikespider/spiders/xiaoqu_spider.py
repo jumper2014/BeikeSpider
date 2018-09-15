@@ -5,7 +5,7 @@
 import time
 from scrapy.spiders import Spider
 from bs4 import BeautifulSoup
-from beikespider.items import BeikespiderItem
+from beikespider.items import BeikespiderXiaoQuItem
 from beikespider.libs.url import *
 
 
@@ -39,7 +39,7 @@ class XiaoQuSpider(Spider):
         :param response:
         :return:
         """
-        item = BeikespiderItem()
+        item = BeikespiderXiaoQuItem()
         html = response.body
         soup = BeautifulSoup(html, "lxml")
 

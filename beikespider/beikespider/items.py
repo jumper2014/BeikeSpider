@@ -8,9 +8,14 @@
 import scrapy
 
 
-class BeikespiderItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+class BeikespiderXiaoQuItem(scrapy.Item):
+    # 小区数据项
     name = scrapy.Field()
     price = scrapy.Field()
     on_sale = scrapy.Field()
+
+
+class BeikespiderErShouFangItem(scrapy.Item):
+    # 二手房的数据项
+    name = scrapy.Field()
+    price = scrapy.Field()

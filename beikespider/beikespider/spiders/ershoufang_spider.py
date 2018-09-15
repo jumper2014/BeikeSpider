@@ -5,7 +5,7 @@
 import time
 from scrapy.spiders import Spider
 from bs4 import BeautifulSoup
-from beikespider.items import BeikespiderItem
+from beikespider.items import *
 from beikespider.libs.url import *
 
 
@@ -39,12 +39,12 @@ class ErShouFangSpider(Spider):
         :param response:
         :return:
         """
-        item = BeikespiderItem()
+        item = BeikespiderErShouFangItem()
         html = response.body
         soup = BeautifulSoup(html, "lxml")
 
         # 获得有小区信息的panel
-        xiaoqu_items = soup.find_all('li', class_="xiaoquListItem")
+        xiaoqu_items = soup.find_all('li', class_="clear")
         print("----\nlen: {0}\n----\n".format(len(xiaoqu_items)))
         for xiaoqu_elem in xiaoqu_items:
             title = xiaoqu_elem.find('div', class_="title")
@@ -53,14 +53,11 @@ class ErShouFangSpider(Spider):
             price = xiaoqu_elem.find('div', class_="totalPrice")
             price = price.text.strip()
 
-            on_sale = xiaoqu_elem.find('div', class_="xiaoquListItemSellCount")
-            on_sale = on_sale.text.replace("\n", "").strip()
             # 继续清理数据
 
-            print("{0} {1} {2}".format(name, price, on_sale))
+            print("{0} {1}".format(name, price))
             item['name'] = name
             item['price'] = price
-            item['on_sale'] = on_sale
             yield item
 
 
