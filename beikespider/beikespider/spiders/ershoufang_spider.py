@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 # author: zengyuetian
+# 二手房信息爬虫
 
 import time
 from scrapy.spiders import Spider
@@ -8,6 +9,7 @@ from beikespider.libs.const import *
 from beikespider.items import *
 from beikespider.libs.url import *
 from beikespider.libs.printer import *
+
 
 class ErShouFangSpider(Spider):
     name = 'ershoufang'
@@ -57,5 +59,3 @@ class ErShouFangSpider(Spider):
             item['name'] = name
             item['price'] = price
             yield item
-
-

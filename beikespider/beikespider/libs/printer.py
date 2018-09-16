@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 # author: zengyuetian
+# 用于存放通用的打印函数
 
 
 def print_item_num(num):

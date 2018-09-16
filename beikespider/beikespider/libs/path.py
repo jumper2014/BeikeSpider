@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 # author: zengyuetian
-# 获得当前目录结构,创建目录结构
+# 工具，获得当前目录结构,创建目录结构
 
 
 import inspect

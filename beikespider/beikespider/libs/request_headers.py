@@ -2,6 +2,7 @@
 # coding=utf-8
 # author: zengyuetian
 # USER AGENTS 可以自己添加
+# 用户制造随机的user agent请求头
 
 import random
 

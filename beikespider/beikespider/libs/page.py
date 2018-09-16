@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 # author: zengyuetian
+# 用来获取页面下方的页数信息
 
 import requests
 import re
