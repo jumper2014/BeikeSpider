@@ -3,15 +3,15 @@
 # author: zengyuetian
 # 解析各城市的小区版块URL-多线程提速
 
+
+import threading
 from beikespider.libs.city import *
 from beikespider.libs.district import *
 from beikespider.libs.area import *
 from beikespider.libs.page import *
-import threading
 
 
 class URL(object):
-
     def __init__(self, house_type):
         prompt = create_prompt_text()
         city = input(prompt)
@@ -27,9 +27,6 @@ class URL(object):
         # 从单个页面获得区县的信息
         districts = get_districts(city)
         # 这个地方开始可以并发获得每个区县的版块信息
-        # for district in districts:
-        #     areas.extend(get_areas(city, district))
-
         threads = list()
         for district in districts:
             t = threading.Thread(target=get_areas, args=(city, district,))
@@ -41,10 +38,10 @@ class URL(object):
             next_item = q.get()
             areas.extend(next_item)
 
-        print("-------------")
-        print("Area is: ")
+        print("-" * 20)
+        print("版块列表如下: ")
         print(areas)
-        print("-------------")
+        print("-" * 20)
         self.start_urls = []
         threads = list()
         for area in areas:
@@ -60,10 +57,6 @@ class URL(object):
             print("area, page: {0} {1}".format(area, page_count))
             for i in range(1, page_count + 1):
                 self.start_urls.append('https://{0}.ke.com/{1}/{2}/pg{3}'.format(city, house_type, area, i))
-            # page_count = get_page_count('https://{0}.ke.com/xiaoqu/{1}'.format(city, area))
-            # print('total page: {0} for {1}:{2}'.format(page_count, city, area))
-            # for i in range(1, page_count + 1):
-            #     self.start_urls.append('https://{0}.ke.com/xiaoqu/{1}/pg{2}'.format(city, area, i))
         print(self.start_urls)
 
 

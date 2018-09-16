@@ -4,14 +4,14 @@
 
 import time
 from scrapy.spiders import Spider
-from bs4 import BeautifulSoup
+from beikespider.libs.const import *
 from beikespider.items import *
 from beikespider.libs.url import *
-
+from beikespider.libs.printer import *
 
 class ErShouFangSpider(Spider):
     name = 'ershoufang'
-    allowed_domains = 'ke.com'
+    allowed_domains = KE_DOMAIN
     start = time.time()
     start_urls = []
     city = None
@@ -29,9 +29,7 @@ class ErShouFangSpider(Spider):
         :param reason:
         :return:
         """
-        print("-" * 50)
-        print("total time cost:{0} seconds".format(time.time() - self.start))
-        print("-" * 50)
+        print_time_cost(time.time() - self.start)
 
     def parse(self, response):
         """
@@ -43,14 +41,14 @@ class ErShouFangSpider(Spider):
         html = response.body
         soup = BeautifulSoup(html, "lxml")
 
-        # 获得有小区信息的panel
-        xiaoqu_items = soup.find_all('li', class_="clear")
-        print("----\nlen: {0}\n----\n".format(len(xiaoqu_items)))
-        for xiaoqu_elem in xiaoqu_items:
-            title = xiaoqu_elem.find('div', class_="title")
+        # 获得有二手房信息的panel
+        elements = soup.find_all('li', class_="clear")
+        print_item_num(len(elements))
+        for element in elements:
+            title = element.find('div', class_="title")
             name = title.text.replace("\n", "")
 
-            price = xiaoqu_elem.find('div', class_="totalPrice")
+            price = element.find('div', class_="totalPrice")
             price = price.text.strip()
 
             # 继续清理数据
